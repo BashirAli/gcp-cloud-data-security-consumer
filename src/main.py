@@ -1,11 +1,14 @@
 from dotenv import load_dotenv
+from core.consumer import DataConsumer
+
 
 # Load the .env file
 load_dotenv()
 
 
 def main():
-    pass
+    data_consumer = DataConsumer()
+    data_consumer.consume()
 
 if __name__ == '__main__':
     main()
