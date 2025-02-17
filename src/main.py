@@ -8,7 +8,7 @@ load_dotenv()
 
 def main():
     data_consumer = DataConsumer()
-    data_consumer.consume()
+    data_consumer.decrypt_and_ingest_data()
 
 if __name__ == '__main__':
     main()

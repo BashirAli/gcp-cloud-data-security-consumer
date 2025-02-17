@@ -1,5 +1,6 @@
-from src.model import logger
+from src.model.logging import logger
 from src.utils.helper import fetch_secrets
+from src.gcp.bigquery import get_or_create_bigquery_table
 
 class DataConsumer:
     def __init__(self):
@@ -12,8 +13,15 @@ class DataConsumer:
 
         logger.info(msg="Encryption key and passphrase fetched successfully from secret manager")
         return secret_keys, secret_passphrase
-
-
-    def consume(self):
+    def _get_or_create_bigquery_table(self):
         pass
+    def _assign_policy_tags_to_bigquery_table(self):
+        pass
+
+    def setup_infra(self):
+        self._get_or_create_bigquery_table()
+        self._assign_policy_tags_to_bigquery_table()
+
+    def decrypt_and_ingest_data(self):
+        private_key, password = self._fetch_decryption_secrets()
 
