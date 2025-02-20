@@ -1,3 +1,3 @@
 
-def policy_tags():
+def add_policy_tags_table():
     pass
