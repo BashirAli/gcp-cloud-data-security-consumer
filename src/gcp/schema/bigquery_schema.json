@@ -1,14 +1,14 @@
 [
-    {"name": "user_id", "type": "STRING", "mode": "REQUIRED"},
-    {"name": "first_name", "type": "STRING", "mode": "NULLABLE"},
-    {"name": "last_name", "type": "STRING", "mode": "NULLABLE"},
-    {"name": "email", "type": "STRING", "mode": "REQUIRED"},
-    {"name": "phone_number", "type": "STRING", "mode": "NULLABLE"},
-    {"name": "date_of_birth", "type": "DATE", "mode": "NULLABLE"},
-    {"name": "address", "type": "STRING", "mode": "NULLABLE"},
-    {"name": "city", "type": "STRING", "mode": "NULLABLE"},
-    {"name": "state", "type": "STRING", "mode": "NULLABLE"},
-    {"name": "zip_code", "type": "STRING", "mode": "NULLABLE"},
-    {"name": "country", "type": "STRING", "mode": "NULLABLE"},
-    {"name": "signup_date", "type": "TIMESTAMP", "mode": "NULLABLE"}
+        {"name": "user_id", "type": "STRING", "mode": "REQUIRED", "policy_tag": "P3 Data"},
+        {"name": "first_name", "type": "STRING", "mode": "NULLABLE", "policy_tag": "P1 Data"},
+        {"name": "last_name", "type": "STRING", "mode": "NULLABLE", "policy_tag": "P1 Data"},
+        {"name": "email", "type": "STRING", "mode": "REQUIRED", "policy_tag": "P1 Data"},
+        {"name": "phone_number", "type": "STRING", "mode": "NULLABLE", "policy_tag": "P1 Data"},
+        {"name": "date_of_birth", "type": "DATE", "mode": "NULLABLE", "policy_tag": "P2 Data"},
+        {"name": "address", "type": "STRING", "mode": "NULLABLE", "policy_tag": "P2 Data"},
+        {"name": "city", "type": "STRING", "mode": "NULLABLE", "policy_tag": "P3 Data"},
+        {"name": "state", "type": "STRING", "mode": "NULLABLE", "policy_tag": "P3 Data"},
+        {"name": "zip_code", "type": "STRING", "mode": "NULLABLE", "policy_tag": "P3 Data"},
+        {"name": "country", "type": "STRING", "mode": "NULLABLE", "policy_tag": "P3 Data"},
+        {"name": "signup_date", "type": "TIMESTAMP", "mode": "NULLABLE", "policy_tag": "P3 Data"}
 ]
