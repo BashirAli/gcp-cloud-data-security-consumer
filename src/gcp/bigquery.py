@@ -2,21 +2,21 @@ from google.cloud import bigquery
 from google.cloud.bigquery import Table
 from google.cloud.exceptions import NotFound
 import json
+import logging
 import os
 from src.model.logging import logger
-
+from src.utils.helper import read_json_file
 
 CURRENT_PATH = os.path.dirname(__file__)
 
 class BigQuery:
-    def __init__(self, project_id: str):
-        self.project_id = project_id
+    def __init__(self, gcp_project_id: str):
+        self.project_id = gcp_project_id
         self.client = bigquery.Client(project=self.project_id)
 
     @staticmethod
     def load_bigquery_schema_from_json(schema_file: str) -> list:
-        with open(CURRENT_PATH + schema_file, 'r') as f:
-            schema_json = json.load(f)
+        schema_json = read_json_file(CURRENT_PATH + schema_file)
 
         schema = []
         for field in schema_json:
@@ -50,3 +50,22 @@ class BigQuery:
 
         if len(error_responses) > 0:
             logger.error(f"Error during BigQuery write: {error_responses}")
+
+
+    def update_bigquery_table_with_policy_tags(self, table: bigquery.Table, updated_schema_file_path:str, policy_tag_map:dict):
+        schema_with_policy_tags = read_json_file(CURRENT_PATH + updated_schema_file_path)
+
+        updated_schema = []
+        for field in schema_with_policy_tags:
+            policy_tag = policy_tag_map.get(field.get("policy_tag"))
+            bq_field = bigquery.SchemaField(
+                name=field["name"],
+                field_type=field["type"],
+                mode=field["mode"],
+                policy_tags=bigquery.PolicyTagList(names=[policy_tag]) if policy_tag else None
+            )
+            updated_schema.append(bq_field)
+
+        table.schema = updated_schema
+        self.client.update_table(table, ["schema"])
+        logging.info(f"Updated {table.full_table_id} schema with policy tags")
