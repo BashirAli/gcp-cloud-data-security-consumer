@@ -10,7 +10,7 @@ This repository presents some best practices when processing, storing and access
 
 
 ## Getting Started
-1. Install poetry (if required) and the poetry files in your chosen virtual environment 
+1. Install poetry (if required) and the poetry files in your chosen virtual environment and activate it
 
 ```
 pip install poetry 
@@ -22,19 +22,31 @@ poetry install
 ```
 GCP_PROJECT_ID=<<YOUR_PROJECT_ID>>
 GCS_BUCKET=<<YOUR_GCS_BUCKET>>
-PRIV_KEY_SECRET_ID=<<SECRET_MANAGER_LOCATION_FOR_PRIVATE_KEY>>
-PASSPHRASE_SECRET_ID=<<SECRET_MANAGER_LOCATION_FOR_PASSPHRASE>>
+DECRYPTION_KEY_SECRET_ID=<<SECRET_MANAGER_LOCATION_FOR_PRIVATE_KEY>>
+DECRYPTION_PASS_SECRET_ID=<<SECRET_MANAGER_LOCATION_FOR_PASSPHRASE>>
+DATASET_ID=<<YOUR_BQ_DATASET_ID>>
+TABLE_ID=<<YOUR_BQ_TABLE_ID>>
+GCP_PROJECT_LOCATION=<<YOUR_PROJECT_LOCATION>>
 ```
-3. Setup GPG public and private keys: 
-- 
-4. Upload the private key and the passphrase to Secret Manager under the following locations: `<<SECRET_MANAGER_LOCATION_FOR_PRIVATE_KEY>>` and `<<SECRET_MANAGER_LOCATION_FOR_PASSPHRASE>>`
+3. Setup your own GPG public and private keys
+- CD in to the repository
+- Run the following script:
+```
+python scripts/generate_gpg_keys.py --name "<<YOUR_NAME>>" --email "<<YOUR_EMAIL>>" --passphrase "<<YOUR_PASSPHRASE>>" --key-length <<KEY_LENGTH>> --output-dir "<<KEY_DIRECTORY>>"
+```
+4. Encrypt test data using the example command 
 
-5. Encrypt test data using the example command 
+```
+python scripts/encrypt_data.py --json-file "<<PATH_TO_JSON_FILE>>" --public-key "<<PATH_TO_PUBLIC_KEY>>"
+```
 
-and then upload the created ___ file in to `<<YOUR_GCS_BUCKET>>`
+5. Upload the private key and your passphrase to Secret Manager under the following locations: `<<SECRET_MANAGER_LOCATION_FOR_PRIVATE_KEY>>` and `<<SECRET_MANAGER_LOCATION_FOR_PASSPHRASE>>`
 
 
-6. run `main()`
+6. Upload the encrypted `.json.gpg` file in to `<<YOUR_GCS_BUCKET>>` with the file name `<<GCS_FILE_NAME>>`
+
+
+7. run `main()`
 
 
 
