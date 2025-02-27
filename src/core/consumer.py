@@ -1,8 +1,7 @@
-import json
 import time
 
 from src.model.logging import logger
-from src.utils.helper import fetch_secrets
+from src.utils.helper import fetch_secrets, load_json_or_jsonlines
 from src.gcp.bigquery import BigQuery
 from src.gcp.gcs import GoogleCloudStorage
 from src.gcp.datacatalog import DataCatalogManager
@@ -40,17 +39,17 @@ class DataConsumer:
 
     def decrypt_and_ingest_data(self):
         # fetch decryption secrets
-        # private_key, password = self._fetch_decryption_secrets()
-        # self.gpg_manager.set_decrypt_passphrase(passphrase=password)
+        private_key, password = self._fetch_decryption_secrets()
+        self.gpg_manager.set_decrypt_passphrase(passphrase=password)
 
         # create table and tag
         bq_table = self.setup_table_infra()
 
         # read file from gcs
-        # gcs_data = self.gcs_client.read_gcs_file_to_bytes(gcs_bucket_name=os.getenv("GCS_BUCKET"), gcs_source_blob=os.getenv("GCS_FILE_NAME"))
-        # if gcs_data:
-        #     # decrypt data
-        #     decrypted_data = self.gpg_manager.decrypt_data(data=gcs_data)
-        #
-        #     # write to bigquery
-        #     self.bq_client.load_json_rows_to_table(bq_table, json.loads(decrypted_data))
+        gcs_data = self.gcs_client.read_gcs_file_to_bytes(gcs_bucket_name=os.getenv("GCS_BUCKET"), gcs_source_blob=os.getenv("GCS_FILE_NAME"))
+        if gcs_data:
+            # decrypt data
+            decrypted_data = self.gpg_manager.decrypt_data(data=gcs_data)
+
+            # write to bigquery
+            self.bq_client.load_json_rows_to_table(bq_table, load_json_or_jsonlines(decrypted_data))
