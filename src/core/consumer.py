@@ -11,7 +11,7 @@ import os
 class DataConsumer:
     def __init__(self):
         self.project_id = os.getenv("GCP_PROJECT_ID")
-        self.gpg_manager = GPGManager
+        self.gpg_manager = GPGManager()
         self.bq_client = BigQuery(gcp_project_id=self.project_id)
         self.gcs_client = GoogleCloudStorage(gcp_project_id=self.project_id)
         self.datacatalog_client = DataCatalogManager(gcp_project_id=self.project_id, location=os.getenv("GCP_PROJECT_LOCATION"))
@@ -52,4 +52,4 @@ class DataConsumer:
             decrypted_data = self.gpg_manager.decrypt_data(data=gcs_data)
 
             # write to bigquery
-            self.bq_client.load_json_rows_to_table(bq_table, load_json_or_jsonlines(decrypted_data))
+            self.bq_client.load_json_rows_to_table(bq_table, load_json_or_jsonlines(str(decrypted_data)))
