@@ -1,0 +1,22 @@
+[tool.poetry]
+name = "gcp-cloud-data-security-consumer"
+version = "0.1.0"
+description = ""
+authors = ["Bashir Ali"]
+
+[tool.poetry.dependencies]
+python = "3.12.0"
+requests = "^2.31.0"
+google-cloud-storage = "==2.10.0"
+google-cloud-bigquery = "==3.24.0"
+google-cloud-secret-manager = "==2.16.1"
+google-cloud-datacatalog = "==3.20.1"
+python-json-logger = "^2.0.7"
+python-gnupg = "==0.5.4"
+python-dotenv = "==1.0.1"
+
+[tool.poetry.dev-dependencies]
+
+[build-system]
+requires = ["poetry-core>=1.0.0"]
+build-backend = "poetry.core.masonry.api"
