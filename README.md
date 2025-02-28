@@ -46,8 +46,10 @@ python scripts/encrypt_data.py --json-file "<<PATH_TO_JSON_FILE>>" --public-key 
 6. Upload the encrypted `.json.gpg` file in to `<<YOUR_GCS_BUCKET>>` with the file name `<<GCS_FILE_NAME>>`
 
 
-7. run `main()`
-
+7. run
+```
+python src/main.py
+```
 
 
 
