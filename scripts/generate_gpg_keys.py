@@ -29,12 +29,12 @@ def generate_gpg_keys(name: str, email: str, passphrase: str, key_length: int, o
         # Export Public Key as ASCII text
         public_key_file: str = os.path.join(output_dir, "public_key.txt")
         with open(public_key_file, "w") as f:
-            f.write(gpg.export_keys(key.fingerprint, armor=True))  # ASCII format
+            f.write(gpg.export_keys(key.fingerprint, armor=True))
 
         # Export Private Key as ASCII text
         private_key_file: str = os.path.join(output_dir, "private_key.txt")
         with open(private_key_file, "w") as f:
-            f.write(gpg.export_keys(key.fingerprint, secret=True, passphrase=passphrase, armor=True))  # ASCII format
+            f.write(gpg.export_keys(key.fingerprint, secret=True, passphrase=passphrase, armor=True))
     else:
         logging.error("Key generation failed.")
 
